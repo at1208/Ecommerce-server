@@ -7,8 +7,7 @@
 
       npm install
 
-<br />
- <b>inside root directory of this cloned repository.</b>
+inside root directory of this cloned repository
 <br />
  <b>3.create .env file inside root directory ...
    and write below code inside .env</b>
