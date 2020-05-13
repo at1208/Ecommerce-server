@@ -9,6 +9,7 @@ const app = express();
 //import routes
 const authRoute = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const productRoutes = require("./routes/product");
 
 //app middlewares
 app.use(cors());
@@ -20,8 +21,13 @@ app.use(bodyParser.urlencoded({ extended: true}))
 //routes middleware
 app.use('/api', authRoute);
 app.use('/api', userRoutes);
+app.use("/api", productRoutes);
 
-mongoose.connect(process.env.DATABASE, {  useNewUrlParser: true, useUnifiedTopology: true })
+
+mongoose.connect(process.env.DATABASE, {  useNewUrlParser: true,
+                                          useUnifiedTopology: true,
+                                          useCreateIndex: true,
+                                          useFindAndModify: false })
    .then(
      () => console.log('Connected to DB'))
    .catch(
