@@ -10,6 +10,7 @@ const app = express();
 const authRoute = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const productRoutes = require("./routes/product");
+const categoryRoutes = require("./routes/category");
 
 //app middlewares
 app.use(cors());
@@ -22,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true}))
 app.use('/api', authRoute);
 app.use('/api', userRoutes);
 app.use("/api", productRoutes);
-
+app.use("/api", categoryRoutes);
 
 mongoose.connect(process.env.DATABASE, {  useNewUrlParser: true,
                                           useUnifiedTopology: true,
