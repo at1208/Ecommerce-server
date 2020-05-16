@@ -1,7 +1,5 @@
 const Category = require("../models/category");
-const formidable = require("formidable");
-const _ = require("lodash");
-const fs = require("fs");
+
 
 
 
@@ -23,6 +21,21 @@ exports.createCategory = async (req, res) => {
       })
     })
 
+};
+
+//  SINGLE CATEGORY BY ID
+exports.getCategoryById = (req, res) => {
+  Category.findById(req.params.categoryId)
+    .exec((err, product) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Category not found"
+        });
+      }
+       res.json({
+         result: product
+       })
+    });
 };
 
 
@@ -62,12 +75,11 @@ exports.updateCategory = async (req, res) => {
 
 // LIST ALL CATEGORY
 exports.getAllCategory = (req, res) => {
-
   Category.find()
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
-          error: "NO product FOUND"
+          error: "No category found"
         });
       }
       res.json(products);

@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   createCategory,
+  getCategoryById,
   updateCategory,
   deleteCategory,
   getAllCategory,
@@ -17,6 +18,8 @@ const { runValidation } = require('../validators/index')
 //CREATE CATEGORY ROUTE
 router.post("/category/create", createCategoryValidator, runValidation, createCategory);
 
+// PRODUCT BY ID ROUTE
+router.get("/category/:categoryId", getCategoryById);
 
 // DELETE CATEGORY BY ID ROUTE
 router.delete("/category/delete/:categoryId",deleteCategory);
