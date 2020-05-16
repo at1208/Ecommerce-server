@@ -1,5 +1,5 @@
 const Product = require("../models/product");
- 
+
 
 exports.getProductById = (req, res) => {
   Product.findById(req.params.productId)
@@ -86,14 +86,29 @@ exports.updateProduct = async (req, res) => {
 
 // LIST ALL PRODUCTS
 exports.getAllProducts = (req, res) => {
-
   Product.find()
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
-          error: "NO product FOUND"
+          error: "No product found"
         });
       }
       res.json(products);
+    });
+};
+
+exports.getProductByFilter = (req, res) => {
+  const query = req.query.category ? req.query : { price: { $gte: req.query.price } }
+
+  Product.find(query)
+    .exec((err, products) => {
+      if (err) {
+        return res.status(400).json({
+          error: "No product found"
+        });
+      }
+      res.json({
+        result: products
+      });
     });
 };

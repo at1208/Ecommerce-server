@@ -7,7 +7,7 @@ const {
   updateProduct,
   deleteProduct,
   getAllProducts,
-
+  getProductByFilter
 } = require("../controllers/product");
 
 const { requireSignin, adminMiddleware } = require("../controllers/auth");
@@ -30,6 +30,9 @@ router.patch("/product/:productId", updateProduct);
 
 //LIST OF PRODUCT ROUTE
 router.get("/products", getAllProducts);
+
+//PRODUCT BY FILTER
+router.get('/products/search', getProductByFilter);
 
 
 
