@@ -55,3 +55,18 @@ exports.update = (req, res) => {
         });
     });
 };
+
+exports.getUsers = async(req,res) => {
+    await User.find()
+    .select('role name email createdAt')
+    .exec((err,result) => {
+      if(err){
+        res.status(400).json({
+          error: err
+        })
+      }
+      res.status(200).json({
+        result
+      })
+    })
+}
