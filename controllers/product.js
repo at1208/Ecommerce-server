@@ -113,3 +113,40 @@ exports.getProductByFilter = (req, res) => {
       });
     });
 };
+
+//SEARCH PRODUCT
+exports.searchProduct = (req,res) => {
+  console.log(req.query);
+  const { search } = req.query;
+  if (search) {
+      Product.find(
+          {
+              $or: [{ name: { $regex: search, $options: 'i' } }, { description: { $regex: search, $options: 'i' } }]
+          },
+          (err, pdt) => {
+              if (err) {
+                  return res.status(400).json({
+                      error: "Failed to fetch products"
+                  });
+              }
+              res.json(pdt);
+          }
+      )
+  }
+}
+
+// GET PRODUCT BY NAME
+exports.getProductByName = (req,res) => {
+  Product.find({ name: req.params.productName })
+   .exec((err, product) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Product not found"
+      });
+    }
+     res.json({
+       result: product
+     })
+  });
+
+}

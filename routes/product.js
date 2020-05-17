@@ -7,7 +7,9 @@ const {
   updateProduct,
   deleteProduct,
   getAllProducts,
-  getProductByFilter
+  getProductByFilter,
+  searchProduct,
+  getProductByName
 } = require("../controllers/product");
 
 const { requireSignin, adminMiddleware } = require("../controllers/auth");
@@ -34,6 +36,10 @@ router.get("/products", getAllProducts);
 //PRODUCT BY FILTER
 router.get('/products/search', getProductByFilter);
 
+//SEARCH PRODUCT
+router.get('/product', searchProduct);
 
+//GET PRODUCT BY NAME
+router.get('/product/searchByName/:productName', getProductByName);
 
 module.exports = router;
