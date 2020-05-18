@@ -12,6 +12,7 @@ const userRoutes = require('./routes/user');
 const productRoutes = require("./routes/product");
 const categoryRoutes = require("./routes/category");
 const activityRoutes = require("./routes/activity");
+const cartRoutes = require("./routes/cart");
 
 //app middlewares
 app.use(cors());
@@ -26,6 +27,7 @@ app.use('/api', userRoutes);
 app.use("/api", productRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", activityRoutes);
+app.use("/api", cartRoutes);
 
 mongoose.connect(process.env.DATABASE, {  useNewUrlParser: true,
                                           useUnifiedTopology: true,
