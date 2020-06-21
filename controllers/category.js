@@ -1,15 +1,10 @@
 const Category = require("../models/category");
 
 
-
-
-
 //CREATE CATEGORY
 exports.createCategory = async (req, res) => {
    const { name } = req.body
-
    const category = new Category({ name })
-
     category.save((err,result) => {
       if(err){
         res.status(400).json({

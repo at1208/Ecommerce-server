@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
 
   reset_passwordLink: {
     type: String,
-    default: "subscriber"
+    default: ""
   },
   purchases: {
     type: Array,

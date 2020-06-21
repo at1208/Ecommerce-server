@@ -3,27 +3,26 @@ const router = express.Router();
 
 const {
 addIntoCart,
-removeFromCart
+removeFromCart,
+getFromCart
 } = require("../controllers/cart");
 
 const { requireSignin } = require("../controllers/auth");
 
 
-
-
-//ADD PRODUCT INTO CART ROUTE
+//ADD PRODUCT INTO CART
 router.post("/cart/add-product", addIntoCart);
 
-// // PRODUCT BY ID ROUTE
-// router.get("/category/:categoryId", getCategoryById);
+// // PRODUCT BY ID
+router.get("/cart/:userId", getFromCart);
 
-// REMOVE FROM THE CART ROUTE
+// REMOVE FROM THE CART
 router.delete("/cart/remove-product/:cartProductId",removeFromCart);
 
-// //UPDATE CATEGORY BY ID ROUTE
+// //UPDATE CATEGORY BY ID
 // router.patch("/category/:categoryId", updateCategory);
 //
-// //LIST OF CATEGORY ROUTE
+// //LIST OF CATEGORY
 // router.get("/categories", getAllCategory);
 
 module.exports = router;

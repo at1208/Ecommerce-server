@@ -114,6 +114,13 @@ exports.requireSignin = expressJwt({
     secret: process.env.JWT_SECRET // req.user._id
 });
 
+exports.signout = (req, res) => {
+    res.clearCookie('token');
+    res.json({
+        message: 'Signout success'
+    });
+};
+
 exports.adminMiddleware = (req, res, next) => {
     User.findById({ _id: req.user._id }).exec((err, user) => {
         if (err || !user) {
@@ -160,7 +167,7 @@ exports.forgotPassword = (req, res) => {
             `
         };
 
-        return user.updateOne({ resetPasswordLink: token }, (err, success) => {
+        return user.updateOne({ reset_passwordLink: token }, (err, success) => {
             if (err) {
                 console.log('RESET PASSWORD LINK ERROR', err);
                 return res.status(400).json({
@@ -187,17 +194,18 @@ exports.forgotPassword = (req, res) => {
 };
 
 exports.resetPassword = (req, res) => {
-    const { resetPasswordLink, newPassword } = req.body;
+    const { reset_passwordLink, newPassword } = req.body;
+    console.log(req.body)
 
-    if (resetPasswordLink) {
-        jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, function(err, decoded) {
+    if (reset_passwordLink) {
+        jwt.verify(reset_passwordLink, process.env.JWT_RESET_PASSWORD, function(err, decoded) {
             if (err) {
                 return res.status(400).json({
                     error: 'Expired link. Try again'
                 });
             }
 
-            User.findOne({ resetPasswordLink }, (err, user) => {
+            User.findOne({ reset_passwordLink }, (err, user) => {
                 if (err || !user) {
                     return res.status(400).json({
                         error: 'Something went wrong. Try later'
@@ -206,7 +214,7 @@ exports.resetPassword = (req, res) => {
 
                 const updatedFields = {
                     password: newPassword,
-                    resetPasswordLink: ''
+                    reset_passwordLink: ''
                 };
 
                 user = _.extend(user, updatedFields);

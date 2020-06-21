@@ -5,6 +5,7 @@ const router = express.Router();
 const { signup,
         accountActivation,
         signin,
+        signout,
         forgotPassword,
         resetPassword,
         // googleLogin,
@@ -24,10 +25,11 @@ const { runValidation } = require('../validators/index')
 router.post('/signup', userSignupValidator, runValidation, signup);
 router.post('/account-activation', accountActivation)
 router.post('/signin', userSigninValidator, runValidation, signin)
+router.get('/signout', signout)
 
 // forgot reset password
-// router.put('/forgot-password', forgotPasswordValidator, runValidation, forgotPassword);
-// router.put('/reset-password', resetPasswordValidator, runValidation, resetPassword);
+router.put('/forgot-password', forgotPasswordValidator, runValidation, forgotPassword);
+router.put('/reset-password', resetPasswordValidator, runValidation, resetPassword);
 // google and facebook
 // router.post('/google-login', googleLogin);
 // router.post('/facebook-login', facebookLogin);

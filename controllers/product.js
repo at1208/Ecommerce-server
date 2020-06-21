@@ -1,5 +1,6 @@
 const Product = require("../models/product");
-
+const slugify = require('slugify');
+const stripHtml = require('string-strip-html');
 
 exports.getProductById = (req, res) => {
   Product.findById(req.params.productId)
@@ -26,15 +27,27 @@ exports.createProduct = async (req, res) => {
            sold,
            photoURL } = req.body
 
+  const slug = slugify(name).toLowerCase();
+  const mtitle = `${name} | ${process.env.APP_NAME}`;
+  const mdesc = stripHtml(description.substring(0, 160));
+
    const product = new Product({
       name,
       description,
+      slug,
+      mtitle,
+      mdesc,
       price,
       category,
       stock,
       sold,
       photoURL
    })
+
+
+
+
+
 
     product.save((err,result) => {
       if(err){
@@ -138,6 +151,23 @@ exports.searchProduct = (req,res) => {
 // GET PRODUCT BY NAME
 exports.getProductByName = (req,res) => {
   Product.find({ name: req.params.productName })
+   .exec((err, product) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Product not found"
+      });
+    }
+     res.json({
+       result: product
+     })
+  });
+
+}
+
+
+// GET PRODUCT BY NAME
+exports.getProductBySlug = (req,res) => {
+  Product.findOne({ slug: req.params.productSlug })
    .exec((err, product) => {
     if (err) {
       return res.status(400).json({

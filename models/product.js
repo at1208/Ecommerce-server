@@ -15,17 +15,28 @@ const productSchema = new mongoose.Schema(
       required: true,
       maxlength: 2000
     },
+    slug: {
+          type: String,
+          unique: true,
+          index: true
+      },
+    mtitle: {
+        type: String
+    },
+    mdesc: {
+        type: String
+    },
     price: {
       type: Number,
       required: true,
       maxlength: 32,
       trim: true
     },
-    category: [{
+    category: {
       type: ObjectId,
       ref: "Category",
       required: true
-    }],
+    },
     stock: {
       type: Number
     },
