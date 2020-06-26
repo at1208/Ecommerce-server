@@ -43,12 +43,7 @@ exports.createProduct = async (req, res) => {
       sold,
       photoURL
    })
-
-
-
-
-
-
+   
     product.save((err,result) => {
       if(err){
         res.status(400).json({
@@ -114,7 +109,7 @@ exports.getProductByFilter = (req, res) => {
   const query = req.query.category ? req.query : { price: { $gte: req.query.price } }
 
   Product.find(query)
-    .select('_id category createdAt stock sold name description price')
+    .select('_id category createdAt stock sold name description price slug')
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
@@ -146,6 +141,7 @@ exports.searchProduct = (req,res) => {
           }
       )
   }
+
 }
 
 // GET PRODUCT BY NAME
