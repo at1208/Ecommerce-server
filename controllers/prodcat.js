@@ -10,9 +10,9 @@ exports.createProductByCategory = async (req, res) => {
         message:"Already existed"
       })
     }
-     const newProdCat = ProdCat({
-       prodcat: categories
-     })
+    const newProdCat = ProdCat({
+      prodcat: categories
+    })
     await newProdCat.save((err,result) => {
       if(err){
         return res.status(400).json({
@@ -48,13 +48,13 @@ exports.getProductByCategory = async (req,res) => {
     var data = [];
     var fuck;
 
-   for(fuck = 0; fuck < categoryIDArray.length; fuck++){
-     let _id = categoryIDArray[fuck]
-     const product = await Product.find({ category: _id }).select('name price slug').sort({ createdAt: -1 }).limit(10)
-     data.push(product)
-     if(fuck + 1  == categoryIDArray.length){
-       res.json(data)
-       return;
-     }
-   }
+  for(fuck = 0; fuck < categoryIDArray.length; fuck++){
+    let _id = categoryIDArray[fuck]
+    const product = await Product.find({ category: _id }).select('name price slug').sort({ createdAt: -1 }).limit(10)
+    data.push(product)
+    if(fuck + 1  == categoryIDArray.length){
+      res.json(data)
+      return;
+    }
+  }
 }
