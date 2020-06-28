@@ -5,9 +5,9 @@ const Product = require('../models/product');
 exports.createProductByCategory = async (req, res) => {
     const { categories } = req.body
     const x = await ProdCat.find()
-    if(x){
+    if(x.length >=1){
       return res.status(200).json({
-        message:"Already existed"
+        message:"Already existed, please update existing one!"
       })
     }
      const newProdCat = ProdCat({
@@ -20,7 +20,8 @@ exports.createProductByCategory = async (req, res) => {
         })
       }
       res.status(200).json({
-        result
+        result,
+        message: "Successfully created"
       })
     })
 };
@@ -37,7 +38,7 @@ exports.updateProductByCatgory = async (req,res) => {
       })
     }
     res.status(200).json({
-      message:"Updated"
+      message:"Successfully Updated"
     })
   })
 }
@@ -57,4 +58,12 @@ exports.getProductByCategory = async (req,res) => {
        return;
      }
    }
+}
+
+
+exports.getPdtCat = async (req,res) => {
+    const categoryIDs = await ProdCat.find()
+    .populate('prodcat','name')
+    .select('prodcat');
+          return res.json(categoryIDs[0])
 }
