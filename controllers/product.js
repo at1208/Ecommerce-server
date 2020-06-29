@@ -110,6 +110,7 @@ exports.getProductByFilter = (req, res) => {
   const query = req.query.category ? req.query : { price: { $gte: req.query.price } }
 
   Product.find(query)
+    .populate('category', 'name')
     .select('_id category createdAt stock sold name description price slug')
     .exec((err, products) => {
       if (err) {
@@ -148,6 +149,7 @@ exports.searchProduct = (req,res) => {
 // GET PRODUCT BY NAME
 exports.getProductByName = (req,res) => {
   Product.find({ name: req.params.productName })
+  .populate('category', 'name')
    .exec((err, product) => {
     if (err) {
       return res.status(400).json({
