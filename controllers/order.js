@@ -1,4 +1,5 @@
 const Order = require('../models/order')
+const Cart = require('../models/cart')
 const Razorpay = require('razorpay');
 const { v4: uuidv4 } = require('uuid');
 const crypto = require('crypto');
@@ -12,6 +13,10 @@ var instance = new Razorpay({
 //CREATE ORDER
 exports.createOrder =  async (req, res) => {
    const { products, order_amount, userId } = req.body
+
+   // console.log(products)
+
+
 
    const newOrder = Order({
      userId,
@@ -46,6 +51,11 @@ exports.createOrder =  async (req, res) => {
             error: err
           })
         }
+
+       products.map(async (item) => {
+          await Cart.deleteMany({product: item.product, user: userId})
+        })
+
         return res.status(200).json({
          order_id: order.id,
          res: "ok",
@@ -105,3 +115,20 @@ var generatedSignature = crypto
         })
       })
  }
+
+ // ALL PAID ORDERS
+  module.exports.allOrders = (req, res) => {
+     const userId = req.params.user_id
+     Order.find({ status: true })
+     .sort({ createdAt: 1 })
+       .exec((err, result) => {
+         if(err){
+           return res.status(400).json({
+             error: err
+           })
+         }
+         res.status(200).json({
+           result
+         })
+       })
+  }

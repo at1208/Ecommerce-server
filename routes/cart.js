@@ -4,7 +4,9 @@ const router = express.Router();
 const {
 addIntoCart,
 removeFromCart,
-getFromCart
+getFromCart,
+addProductCountCart,
+subtractProductCountCart
 } = require("../controllers/cart");
 
 const { requireSignin } = require("../controllers/auth");
@@ -19,10 +21,12 @@ router.get("/cart/:userId", getFromCart);
 // REMOVE FROM THE CART
 router.delete("/cart/remove-product/:cartProductId",removeFromCart);
 
-// //UPDATE CATEGORY BY ID
-// router.patch("/category/:categoryId", updateCategory);
-//
-// //LIST OF CATEGORY
-// router.get("/categories", getAllCategory);
+// INCREMENT IN CART COUNT
+router.patch("/cart/increment/:cartProductId/:productId", addProductCountCart);
+
+// DECREMENT IN CART COUNT
+router.patch("/cart/decrement/:cartProductId/:productId", subtractProductCountCart);
+
+
 
 module.exports = router;

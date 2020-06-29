@@ -4,6 +4,7 @@ const stripHtml = require('string-strip-html');
 
 exports.getProductById = (req, res) => {
   Product.findById(req.params.productId)
+    .populate('category')
     .exec((err, product) => {
       if (err) {
         return res.status(400).json({
@@ -43,7 +44,7 @@ exports.createProduct = async (req, res) => {
       sold,
       photoURL
    })
-   
+
     product.save((err,result) => {
       if(err){
         res.status(400).json({

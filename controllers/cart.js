@@ -66,19 +66,40 @@ exports.getFromCart = (req, res) => {
   })
 };
 
-// UPDATE PRODUCT INTO CART
-exports.updateProductIntoCart = (req, res) => {
+
+exports.addProductCountCart = (req, res) => {
   const cart_id = req.params.cartProductId;
   const product_id = req.params.productId;
 
-   Cart.findOneAndRemove({ _id }).exec((err, data) => {
+
+   Cart.findByIdAndUpdate({_id: cart_id, product: product_id },{ $inc: { count: 1 } }, {new: true }).exec((err, data) => {
        if (err) {
            return res.json({
-               error: "Failed to remove from cart"
+               error:  err
            });
        }
        res.json({
-           message: 'successfully removed from the cart'
+           data,
+           message: 'successfully incremented into cart'
        });
    });
+};
+
+
+
+exports.subtractProductCountCart = (req, res) => {
+  const cart_id = req.params.cartProductId;
+  const product_id = req.params.productId;
+
+  Cart.findByIdAndUpdate({_id: cart_id, product: product_id },{ $inc: { count: -1 } }, {new: true }).exec((err, data) => {
+      if (err) {
+          return res.json({
+              error:  err
+          });
+      }
+      res.json({
+          data,
+          message: 'successfully decremented into cart'
+      });
+  });
 };
