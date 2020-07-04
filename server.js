@@ -1,10 +1,13 @@
 require('dotenv').config();
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 const cors = require('cors');
 const morgan = require('morgan');
-const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const app = express();
+require('./controllers/chatsupport')(io);
+
 
 //import routes
 const authRoute = require('./routes/auth');
@@ -21,6 +24,7 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}))
+
 
 
 //routes middleware
@@ -43,4 +47,4 @@ mongoose.connect(process.env.DATABASE, {  useNewUrlParser: true,
      (error) => console.log(error));
 
 const Port = process.env.PORT || 8080;
-app.listen(Port, () => console.log(`Listening to ${Port}`));
+server.listen(Port, () => console.log(`Listening to ${Port}`));

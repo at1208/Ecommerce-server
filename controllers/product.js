@@ -167,6 +167,7 @@ exports.getProductByName = (req,res) => {
 // GET PRODUCT BY NAME
 exports.getProductBySlug = (req,res) => {
   Product.findOne({ slug: req.params.productSlug })
+   .populate('category', 'name')
    .exec((err, product) => {
     if (err) {
       return res.status(400).json({
