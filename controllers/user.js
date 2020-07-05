@@ -72,8 +72,8 @@ exports.getUsers = async(req,res) => {
 }
 
 exports.updateUserProfile = async (req,res) => {
-  const { userId, address, name} = req.body
-  User.findByIdAndUpdate(userId, { address: address, name: name},{ new: true })
+  const { userId, flatNumber,streetName,city,pinCode, name} = req.body
+  User.findByIdAndUpdate(userId, { address: {flatNumber: flatNumber,streetName: streetName,city: city,pinCode: pinCode}, name: name},{ new: true })
   .exec((err, result) => {
     if(err){
       return res.status(400).json({

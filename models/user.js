@@ -18,8 +18,22 @@ const userSchema = mongoose.Schema({
   },
 
   address:{
-     type: String,
-     default: null
+     flatNumber: {
+       type: String,
+       default: null
+     },
+     streetName: {
+       type: String,
+       default: null
+     },
+     city: {
+       type: String,
+       default: null
+     },
+     pinCode: {
+       type: Number,
+       default: null
+     }
   },
 
   hashed_password: {
