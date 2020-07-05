@@ -10,7 +10,8 @@ const {
   getProductByFilter,
   searchProduct,
   getProductByName,
-  getProductBySlug
+  getProductBySlug,
+  listRelatedProducts
 } = require("../controllers/product");
 
 const { requireSignin, adminMiddleware } = require("../controllers/auth");
@@ -45,5 +46,8 @@ router.get('/product/searchByName/:productName', getProductByName);
 
 //GET PRODUCT BY SLUG
 router.get('/product/searchBySlug/:productSlug', getProductBySlug);
+
+//GET RELATED PRODUCT
+router.get('/products/related/:product_id/:category_id', listRelatedProducts);
 
 module.exports = router;

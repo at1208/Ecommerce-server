@@ -180,3 +180,21 @@ exports.getProductBySlug = (req,res) => {
   });
 
 }
+
+
+// RELATED PRODUCTS
+exports.listRelatedProducts = (req, res) => {
+    let limit = req.body.limit ? parseInt(req.body.limit) : 3;
+    const { product_id, category_id } = req.params;
+    Product.find({ _id: { $ne: product_id }, category: { $in: category_id } })
+        .limit(limit)
+        .sort({ createdAt: -1 })
+        .exec((err, products) => {
+            if (err) {
+                return res.status(400).json({
+                    error: 'Products not found'
+                });
+            }
+            res.json(products);
+        });
+};

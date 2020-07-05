@@ -6,6 +6,7 @@ module.exports = (io) => {
     if(socket.handshake.headers.origin === process.env.CLIENT_URL){
       users.push(socket.id)
     }
+    io.emit('online', users.length);
   }
 
   const removeUser = (socket, next) => {
@@ -15,8 +16,7 @@ module.exports = (io) => {
 
   io.on('connection', (socket) => {
         addUser(socket)
-      io.emit('online', users.length);
-      
+
       socket.on('disconnect', () => {
         removeUser(socket, () => {
           io.emit('online', users.length);
