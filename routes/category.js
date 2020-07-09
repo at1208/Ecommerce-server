@@ -16,16 +16,16 @@ const { runValidation } = require('../validators/index')
 
 
 //CREATE CATEGORY ROUTE
-router.post("/category/create", createCategoryValidator, runValidation, createCategory);
+router.post("/category/create", createCategoryValidator, runValidation,requireSignin, createCategory);
 
 // PRODUCT BY ID ROUTE
 router.get("/category/:categoryId", getCategoryById);
 
 // DELETE CATEGORY BY ID ROUTE
-router.delete("/category/delete/:categoryId",deleteCategory);
+router.delete("/category/delete/:categoryId",requireSignin,deleteCategory);
 
 //UPDATE CATEGORY BY ID ROUTE
-router.patch("/category/:categoryId", updateCategory);
+router.patch("/category/:categoryId",requireSignin, updateCategory);
 
 //LIST OF CATEGORY ROUTE
 router.get("/categories", getAllCategory);

@@ -27,10 +27,10 @@ router.post("/product/create", createProductValidator, runValidation, createProd
 router.get("/product/:productId", getProductById);
 
 // DELETE PRODUCT BY ID ROUTE
-router.delete("/product/delete/:productId",deleteProduct);
+router.delete("/product/delete/:productId",requireSignin,deleteProduct);
 
 //update route
-router.patch("/product/:productId", updateProduct);
+router.patch("/product/:productId", requireSignin,updateProduct);
 
 //LIST OF PRODUCT ROUTE
 router.get("/products", getAllProducts);

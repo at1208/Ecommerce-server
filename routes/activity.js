@@ -13,7 +13,7 @@ const { runValidation } = require('../validators/index')
 
 
 //CREATE ACTIVITY ROUTE
-router.post("/activity/create", createActivityValidator, runValidation, createActivity);
+router.post("/activity/create", createActivityValidator, runValidation,requireSignin, createActivity);
 
 //GET ALL ACTIVITY ROUTE
 router.get("/activities", getAllActivities);
