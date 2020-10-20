@@ -6,6 +6,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cloudinary = require('cloudinary');
 require('./controllers/chatsupport')(io);
 
 
@@ -18,6 +19,8 @@ const activityRoutes = require("./routes/activity");
 const cartRoutes = require("./routes/cart");
 const prodcatRoutes = require("./routes/prodcat");
 const orderRoutes = require("./routes/order");
+const uploadRoutes = require('./routes/upload');
+
 
 //app middlewares
 app.use(cors());
@@ -30,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true}))
 //routes middleware
 app.use('/api', authRoute);
 app.use('/api', userRoutes);
+app.use('/api', uploadRoutes);
 app.use("/api", productRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", activityRoutes);
@@ -45,6 +49,14 @@ mongoose.connect(process.env.DATABASE, {  useNewUrlParser: true,
      () => console.log('Connected to DB'))
    .catch(
      (error) => console.log(error));
+
+
+ cloudinary.config({
+   cloud_name: process.env.CLOUD_NAME,
+   api_key: process.env.CLOUDINARY_API_KEY,
+   api_secret: process.env.CLOUDINARY_API_SECRET
+ })
+
 
 const Port = process.env.PORT || 8080;
 server.listen(Port, () => console.log(`Listening to ${Port}`));

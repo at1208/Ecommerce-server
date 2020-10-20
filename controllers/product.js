@@ -111,7 +111,7 @@ exports.getProductByFilter = (req, res) => {
 
   Product.find(query)
     .populate('category', 'name')
-    .select('_id category createdAt stock sold name description price slug')
+    .select('_id category createdAt stock sold name description price slug photoURL')
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({

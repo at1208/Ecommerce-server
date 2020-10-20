@@ -6,6 +6,11 @@ module.exports.createProductValidator= [
        .isEmpty()
        .withMessage('name is required'),
 
+       check('photoURL')
+       .not()
+       .isEmpty()
+       .withMessage('Product image is required'),
+
        check('description')
        .not()
        .isEmpty()

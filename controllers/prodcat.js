@@ -51,7 +51,7 @@ exports.getProductByCategory = async (req,res) => {
 
   for(fuck = 0; fuck < categoryIDArray.length; fuck++){
     let _id = categoryIDArray[fuck]
-    const product = await Product.find({ category: _id }).select('name price slug').sort({ createdAt: -1 }).limit(10)
+    const product = await Product.find({ category: _id }).select('name price slug photoURL').sort({ createdAt: -1 }).limit(10)
     data.push(product)
     if(fuck + 1  == categoryIDArray.length){
       res.json(data)
