@@ -45,6 +45,11 @@ exports.updateProductByCatgory = async (req,res) => {
 
 exports.getProductByCategory = async (req,res) => {
     const categoryIDs = await ProdCat.find();
+    if(categoryIDs.length == 0){
+      return res.status(200).json({
+        result: null
+      })
+    }
     const categoryIDArray = categoryIDs[0].prodcat;
     var data = [];
     var fuck;
