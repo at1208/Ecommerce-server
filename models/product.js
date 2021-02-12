@@ -6,8 +6,7 @@ const productSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
-      required: true,
-      maxlength: 32
+      required: true
     },
     bestseller:{
       type: Boolean,
@@ -16,8 +15,7 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
-      required: true,
-      maxlength: 2000
+      required: true
     },
     slug: {
           type: String,

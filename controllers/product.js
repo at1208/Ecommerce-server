@@ -47,7 +47,7 @@ exports.createProduct = async (req, res) => {
 
     product.save((err,result) => {
       if(err){
-        res.status(400).json({
+        return res.status(400).json({
           error: err
         })
       }
